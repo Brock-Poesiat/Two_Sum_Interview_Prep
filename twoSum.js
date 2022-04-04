@@ -3,18 +3,43 @@
 //You may assume that each input would have exactly one solution, and you may not use the the same element twice.
 //You can return the answer in any order
 
+// //O(n2) = slow
+// function twoSum (nums, target){
+//   for (let i = 0; i < nums.length - 1; i++){
+//     for (let j = i + 1; j < nums.length; j++){
+//       if (nums[i] + nums[j] == target){
+//         return [i, j];
+//       }
+//     }
+//   }
+// }
 
-function twoSum (nums, target){
-  for (let i = 0; i < nums.length - 1; i++){
-    for (let j = i + 1; j < nums.length; j++){
-      if (nums[i] + nums[j] == target){
-        return [i, j];
-      }
+// We will use a hash map/object to solve this problem: O(n) = fast
+function twoSum  (nums, target) {
+  //1) add items to hash map: value: index
+  // let numbersHash = {};
+  // for (let i = 0; i < nums.length; i++){
+  //   numbersHash[nums[i]] = i;
+  // }
+
+  //2) iterate through nums again checking if target minus current value is in the hashMap
+  //if it is, return an array consisting of the current val and (target - current val)
+  let numbersHash = {};
+  for (let i = 0; i < nums.length; i++){
+    let complement = target - nums[i];
+    if (numbersHash[complement] !== undefined && numbersHash[complement] != i){
+      console.log([i, numbersHash[complement]])
+      return [i, numbersHash[complement]];
+    }
+    else{
+      numbersHash[nums[i]] = i;
     }
   }
 }
 
+
 function test (output, expectedOutput) {
+  output = output.sort((a,b)=>a-b);
   if (output[0] == expectedOutput[0] && output[1] == expectedOutput[1]) {
     console.log("Test Passed!");
   }
